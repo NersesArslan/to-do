@@ -2,12 +2,22 @@ const { dirname } = require('path');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+
+
 module.exports = {
-    entry: './src/index.js',
+    mode : 'development',
+    entry: {
+        index: './src/index.js',
+        print: './src/print.js',
+     },
+     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'To Do'
-        })
+            title: 'To Do',
+            template: 'src/index.html',
+            filename: 'index.html',
+            inject: false
+        }),
     ],
     output: {
         filename: '[name].bundle.js',

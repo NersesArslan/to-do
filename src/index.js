@@ -1,5 +1,8 @@
 import _, { head } from 'lodash';
 import './style.css';
+import test from './print.js';
+
+
 
 const header = document.createElement('h1')
 const input = document.createElement('input')
@@ -16,9 +19,12 @@ header.classList.add('header')
 input.classList.add('myInput')
 button.classList.add('myBtn')
 
+
+
 document.body.appendChild(header)
 document.body.appendChild(input)
 document.body.appendChild(button)
+
 
 
 button.addEventListener('click', () => {
@@ -26,5 +32,7 @@ button.addEventListener('click', () => {
    myToDo.textContent = input.value
    document.body.appendChild(myToDo)
    input.value = ''
-   
+
 })
+
+test()

@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
   "homepage": "https://github.com/NersesArslan/to-do#readme",
   "devDependencies": {
     "css-loader": "^6.7.3",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "image-webpack-loader": "^8.1.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
