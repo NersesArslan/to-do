@@ -3,27 +3,47 @@ import './style.css';
 import test from './print.js';
 
 
-const btn = document.createElement('button')
-const input = document.createElement('input')
+
 const todoContainer = document.querySelector('.toDoContainer')
 const main = document.querySelector('.main')
-
 const addToDo = document.querySelector('.addToDo')
 
-input.classList.add('myInput')
-btn.classList.add('addBtn')
-btn.textContent = 'Add'
+const form = document.createElement('form')
+
+
+const titleInput = document.createElement('input')
+const titleLabel = document.createElement('label')
+const descriptionInput = document.createElement('input')
+const descriptionLabel = document.createElement('label')
+const dueDateLabel = document.createElement('label')
+const dueDateInput = document.createElement('input')
+
+const priorityLabel = document.createElement('p')
+const priority = document.createElement('select')
+
+titleLabel.textContent = 'Title'
+descriptionLabel.textContent = 'Description'
+dueDateLabel.textContent = 'Due Date'
+priorityLabel.textContent = 'Priority'
+
+
+form.setAttribute('method', 'post')
+titleInput.classList.add('titleInput')
+titleLabel.classList.add('titleLabel')
+dueDateInput.classList.add('dueDateInput')
+
+
+form.appendChild(titleLabel)
+form.appendChild(titleInput)
+form.appendChild(descriptionLabel)
+form.appendChild(descriptionInput)
+form.appendChild(dueDateLabel)
+form.appendChild(dueDateInput)
+form.appendChild(priorityLabel)
+form.appendChild(priority)
 
 addToDo.addEventListener('click', () => {
     todoContainer.innerHTML = ''
-    
-    todoContainer.appendChild(input)
-    todoContainer.appendChild(btn)
+    todoContainer.appendChild(form)
 })
 
-btn.addEventListener('click', () => {
-    const todo = document.createElement('p')
-    todo.textContent = input.value
-    main.appendChild(todo);
-    input.value = ''
-})
