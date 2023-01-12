@@ -41,9 +41,6 @@ html, body {
     align-items: center;
 }
 
-.toDoContainer:hover {
-    background-color: gray;
-}
 
 .myInput  {
     height: 20px
