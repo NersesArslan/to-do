@@ -18,6 +18,7 @@
   "bugs": {
     "url": "https://github.com/NersesArslan/to-do/issues"
   },
+  
   "homepage": "https://github.com/NersesArslan/to-do#readme",
   "devDependencies": {
     "css-loader": "^6.7.3",
@@ -27,8 +28,16 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
-  },
+  }, 
+  
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
+    "process": "^0.11.10",
+    "stream": "^0.0.2",
+    "util": "^0.12.5"
+  },
+  "browser": {
+    "child_process": false
   }
 }
