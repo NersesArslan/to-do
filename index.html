@@ -32,7 +32,7 @@
               id="title"
               placeholder="task name"
               class="title-input"
-              data-todo-input
+              data-title-input
             />
 
             <textarea
@@ -67,9 +67,10 @@
               </select>
             </div>
             <button class="add-button">+</button>
+            <button class="delete-todo" data-delete-todo>Delete ToDo</button>
           </form>
 
-          <button class="delete-button" data-delete-button>Delete</button>
+          <button class="delete-button" data-delete-button>Delete Project</button>
           <ul class="todo-list" data-tasks></ul>
         </div>
       </div>
@@ -78,11 +79,10 @@
       <div class="todo">
         <h4></h4>
         <input type="checkbox" />
-        <label for="">
+        <label>
           <span class="custom-checkbox"></span>
         </label>
       </div>
     </template>
-   
   </body>
 </html>
