@@ -14,10 +14,11 @@ const projectDisplayContainer = document.querySelector(
 );
 const projectTitleElement = document.querySelector(".project-title");
 const tasksContainer = document.querySelector("[data-tasks]");
-const taskTemplate = document.getElementById('task-template')
-const newToDoForm = document.querySelector('[data-todo-form]')
-const newToDoTitle = document.querySelector('[data-title-input]')
-const deleteToDo = document.querySelector('[data-delete-todo]')
+const taskTemplate = document.getElementById("task-template");
+const newToDoForm = document.querySelector("[data-todo-form]");
+const newToDoTitle = document.querySelector("[data-title-input]");
+const newToDoDescription = document.querySelector("[data-description-input]");
+const deleteToDo = document.querySelector("[data-delete-todo]");
 
 const LOCAL_STORAGE_PROJECT_KEY = "task.projects";
 const LOCAL_STORAGE_SELECTED_PROJECT_KEY = "task.selectedProjectId";
@@ -34,30 +35,34 @@ projectsContainer.addEventListener("click", (e) => {
   saveAndRender();
 });
 
-tasksContainer.addEventListener('click', e => {
-    if (e.target.tagName.toLowerCase() === 'input') {
-        const selectedProject = projects.find(project => project.id === selectedProjectId)
-        const selectedToDo = selectedProject.tasks.find(todo => todo.id === e.target.id)
-        selectedToDo.complete = e.target.checked
-        save()
+tasksContainer.addEventListener("click", (e) => {
+  if (e.target.tagName.toLowerCase() === "input") {
+    const selectedProject = projects.find(
+      (project) => project.id === selectedProjectId
+    );
+    const selectedToDo = selectedProject.tasks.find(
+      (todo) => todo.id === e.target.id
+    );
+    selectedToDo.complete = e.target.checked;
+    save();
+  }
+});
 
-    }
-})
-
-
-deleteToDo.addEventListener('click', e => {
-    const selectedProject = projects.find(project => project.id === selectedProjectId)
-        selectedProject.tasks = selectedProject.tasks.filter(task => !task.complete)
-        saveAndRender()
-})
+deleteToDo.addEventListener("click", (e) => {
+  const selectedProject = projects.find(
+    (project) => project.id === selectedProjectId
+  );
+  selectedProject.tasks = selectedProject.tasks.filter(
+    (task) => !task.complete
+  );
+  saveAndRender();
+});
 
 deleteProjectButton.addEventListener("click", (e) => {
   projects = projects.filter((project) => project.id !== selectedProjectId);
   selectedProjectId = null;
   saveAndRender();
 });
-
-
 
 newProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -70,22 +75,32 @@ newProjectForm.addEventListener("submit", (e) => {
 });
 
 newToDoForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const toDoName = newToDoTitle.value;
-    if (toDoName == null || toDoName === "") return;
-    const todo = createToDo(toDoName);
-    newToDoTitle.value = null;
-    const selectedProject = projects.find(project => project.id === selectedProjectId)
-    selectedProject.tasks.push(todo)
-    saveAndRender();
-  });
+  e.preventDefault();
+  const toDoName = newToDoTitle.value;
+  const description = newToDoDescription.value;
+  if (toDoName == null || toDoName === "") return;
+  const todo = createToDo(toDoName, description);
+  newToDoTitle.value = null;
+  newToDoDescription.value = null;
+  const selectedProject = projects.find(
+    (project) => project.id === selectedProjectId
+  );
+  selectedProject.tasks.push(todo);
+
+  saveAndRender();
+});
 
 function createProject(name) {
   return { id: Date.now().toString(), name: name, tasks: [] };
 }
 
-function createToDo(name) {
-    return { id: Date.now().toString(), name: name, complete: false }
+function createToDo(name, description) {
+  return {
+    id: Date.now().toString(),
+    name: name,
+    description: description,
+    complete: false,
+  };
 }
 
 function save() {
@@ -100,30 +115,35 @@ function saveAndRender() {
 
 function render() {
   clearElement(projectsContainer);
-  renderLists() 
+  renderLists();
 
-  const selectedProject = projects.find(project => project.id === selectedProjectId)
-  if(selectedProjectId == null) {
-    projectDisplayContainer.style.display = 'none'
+  const selectedProject = projects.find(
+    (project) => project.id === selectedProjectId
+  );
+  if (selectedProjectId == null) {
+    projectDisplayContainer.style.display = "none";
   } else {
-    projectDisplayContainer.style.display = ''
-    projectTitleElement.innerText = selectedProject.name
-    clearElement(tasksContainer)
-    renderToDos(selectedProject)
+    projectDisplayContainer.style.display = "";
+    projectTitleElement.innerText = selectedProject.name;
+    clearElement(tasksContainer);
+    renderToDos(selectedProject);
   }
 }
 
 function renderToDos(selectedProject) {
-    selectedProject.tasks.forEach(task => {
-        const taskElement = document.importNode(taskTemplate.content, true)
-        const checkbox = taskElement.querySelector('input')
-        checkbox.id = task.id
-        checkbox.checked = task.complete
-        const label = taskElement.querySelector('label')
-        label.htmlFor = task.id
-        label.append(task.name)
-        tasksContainer.appendChild(taskElement)
-    })
+  selectedProject.tasks.forEach((task) => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector("input");
+    checkbox.id = task.id;
+    checkbox.checked = task.complete;
+    const title = taskElement.querySelector("h4");
+    title.append(task.name);
+    
+    const label = taskElement.querySelector('label')
+    label.append(task.description)
+
+    tasksContainer.appendChild(taskElement);
+  });
 }
 
 function renderLists() {

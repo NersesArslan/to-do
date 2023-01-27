@@ -12,6 +12,7 @@ html, body {
 .ToDoContainer {
    display: flex;
    flex-direction: column;
+   width: 100%;
 }
 
 .sidebar {
@@ -74,11 +75,11 @@ html, body {
     width: 25px
 }
 
-.delete-button {
+.delete-button, .delete-todo {
     width: 55px;
 }
 
-textarea[name="description"], input[type="text"] {
+input[name="description"], input[type="text"] {
  font-family: 'Times New Roman', Times, serif;
  
 }
