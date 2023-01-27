@@ -1,21 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <title>To Do</title>
-    
-</head>
-<body>
-  <div class="container">
-    <div class="sidebar">
-      <div>Default Project</div>
-      <button>Add Project</button>
+    <script src="./index.bundle.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="all-projects">
+          <h2 class="project-list-title">My Projects</h2>
+          <ul class="project-list" data-projects></ul>
+          <form action="" data-new-list-form>
+            <input type="text" class="new-project" data-new-list-input />
+            <button class="btncreate">+</button>
+          </form>
+        </div>
+      </div>
+      <div class="main">
+        <div class="ToDoContainer" data-project-display-container>
+          <h2 class="project-title" data-project-title>To Do List</h2>
+          <form action="" data-todo-form>
+            <input
+              type="text"
+              id="title"
+              placeholder="task name"
+              class="title-input"
+              data-todo-input
+            />
+
+            <textarea
+              name="description"
+              class="description-input"
+              placeholder="task description"
+              id=""
+              cols="30"
+              rows="10"
+              data-description-input
+            ></textarea>
+
+            <div class="inputbuttons">
+              <input
+                type="text"
+                onfocus="(this.type = 'date')"
+                class="date-input"
+                placeholder="Due Date"
+                data-date-input
+              />
+
+              <select
+                name="priority"
+                id="priority"
+                class="priority-input"
+                data-priority-input
+              >
+                <option style="display: none" selected>Select Priority</option>
+                <option value="!">Not Important</option>
+                <option value="!!">Important</option>
+                <option value="!!!">Urgent</option>
+              </select>
+            </div>
+            <button class="add-button">+</button>
+          </form>
+
+          <button class="delete-button" data-delete-button>Delete</button>
+          <ul class="todo-list" data-tasks></ul>
+        </div>
+      </div>
     </div>
-    <div class="main"></div>
-    </div>
-    
-    <script  src="./index.bundle.js" ></script>
-</body>
+    <template id="task-template">
+      <div class="todo">
+        <h4></h4>
+        <input type="checkbox" />
+        <label for="">
+          <span class="custom-checkbox"></span>
+        </label>
+      </div>
+    </template>
+   
+  </body>
 </html>
