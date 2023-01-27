@@ -1,116 +1,91 @@
-import _, { add, head, times } from 'lodash';
-import './style.css';
+import _, { add, head, times } from "lodash";
+import "./style.css";
 
-import {UI} from './ui.js'
-import { arrayBuffer } from 'stream/consumers';
+import { UI } from "./ui.js";
+import { arrayBuffer } from "stream/consumers";
+import { openStdin } from "process";
 
-const ToDoList = () => {
+const projectsContainer = document.querySelector("[data-projects]");
+const newProjectForm = document.querySelector("[data-new-list-form]");
+const newProjectInput = document.querySelector("[data-new-list-input]");
+const deleteProjectButton = document.querySelector("[data-delete-button]");
+const projectDisplayContainer = document.querySelector(
+  "[data-project-display-container]"
+);
+const projectTitleElement = document.querySelector("[data-project-title]");
+const tasksContainer = document.querySelector("[data-tasks]");
 
-const list = [] 
+const LOCAL_STORAGE_PROJECT_KEY = "task.projects";
+const LOCAL_STORAGE_SELECTED_PROJECT_KEY = "task.selectedProjectId";
 
-const ToDo = (title, description, dueDate, priority) => {   
-    return {title, description, dueDate, priority}
+let projects =
+  JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
+let selectedProjectId = localStorage.getItem(
+  LOCAL_STORAGE_SELECTED_PROJECT_KEY
+);
+
+projectsContainer.addEventListener("click", (e) => {
+  if (e.target.tagName.toLowerCase() === "li")
+    selectedProjectId = e.target.dataset.projectId;
+  saveAndRender();
+});
+
+deleteProjectButton.addEventListener("click", (e) => {
+  projects = projects.filter((project) => project.id !== selectedProjectId);
+  selectedProjectId = null;
+  saveAndRender();
+});
+
+newProjectForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const projectName = newProjectInput.value;
+  if (projectName == null || projectName === "") return;
+  const project = createProject(projectName);
+  newProjectInput.value = null;
+  projects.push(project);
+  saveAndRender();
+});
+
+function createProject(name) {
+  return { id: Date.now().toString(), name: name, tasks: [] };
 }
 
-const makeToDos = (title, description, dueDate, priority) => {
-
-    const todo = ToDo(title, description, dueDate, priority)   
-    list.push(todo)
-    return {list, title, description, dueDate, priority}
+function save() {
+  localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects));
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_KEY, selectedProjectId);
 }
 
-const removeToDos = () => {
-    const index = list.find(item => item.title)
-    if(index !== -1){
-        list.splice(index, 1)
-    }  
- }
-
- return {list, makeToDos, removeToDos}
+function saveAndRender() {
+  save();
+  render();
 }
 
-const ProjectList = () => {
-
-const listOfProjects = []
-
-const Project = (id, ToDoList) => {
-    return {id, ToDoList}
+function render() {
+  clearElement(projectsContainer);
+  renderLists() 
+  if(selectedProjectId == null) {
+    projectDisplayContainer.style.display = 'none'
+  } else {
+    projectDisplayContainer.style.display = ''
+  }
 }
 
-const makeProject = (id) => {
-    const newProject = Project(id, ToDoList)
-    listOfProjects.push(newProject)
-    return newProject
+function renderLists() {
+  projects.forEach((project) => {
+    const projectElement = document.createElement("li");
+    projectElement.dataset.projectId = project.id;
+    projectElement.classList.add("project-name");
+    projectElement.innerText = project.name;
+    if (project.id === selectedProjectId)
+      projectElement.classList.add("active-project");
+    projectsContainer.appendChild(projectElement);
+  });
 }
 
-const removeProject = (id) => {
-    const index = listOfProjects.findIndex(project => project.id === id)
-    if(index !== -1){
-        listOfProjects.splice(index, 1)
-    }
-  
-}
- return {listOfProjects, makeProject, removeProject}
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
 }
 
-const project = ProjectList()
-
-
-project.makeProject('default project')
-
-
-//What's the next step? To create a default project and make it so that the user can add and remove projects.
-// Users should be able to create new projects and choose which project their to dos should go into.
-
-function newProject(name) {     //creates new projects
- return project.makeProject(name)
-}
-
-const sidebar = document.querySelector('.sidebar')
-
-
-for(let i = 0; i < project.listOfProjects.length; i++){
-    const projectSidebar = document.createElement('div')
-    projectSidebar.innerHTML = project.listOfProjects[i].id
-    
-    sidebar.appendChild(projectSidebar)
-}
-
-const main = document.querySelector('.main')
-
-const input = document.createElement('input')
-const addBtn = document.createElement('button')
-
-input.classList.add('input')
-addBtn.classList.add('addBtn')
-
-addBtn.textContent ='Add'
-main.appendChild(input)
-main.appendChild(addBtn)
-
-console.log(project.makeProject('default project').ToDoList())
-
-// const button = document.createElement('button')
-// button.textContent = 'add Project'
-
-// const container = document.querySelector('.container')
-// container.appendChild(button)
-
-// button.addEventListener('click', () => {
-//     const name = prompt('project name')
-//     project.makeProject(name)
-   
-//     console.log(project.listOfProjects)
-// })
-
-// const removeBtn = document.createElement('button')
-// removeBtn.textContent = 'remove Project'
-// removeBtn.classList.add('remove')
-
-// removeBtn.addEventListener('click', ()=> {
-//     const name = prompt('name')
-//     project.removeProject(name)
-//     console.log(project.listOfProjects)
-// })
-
-// container.appendChild(removeBtn)
+render();

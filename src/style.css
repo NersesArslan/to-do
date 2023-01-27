@@ -9,15 +9,22 @@ html, body {
  grid-template-columns: 1fr 4fr;
 }
 
+.ToDoContainer {
+   display: flex;
+   flex-direction: column;
+}
+
 .sidebar {
-    background-color: 
-    #0891b2;
-   
+    background-color: #0891b2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap:15px;
 }
 
 .main {
     display: flex;
-   
+   justify-content: center;
     background-color: linen;
     padding: 20px;
 }
@@ -29,3 +36,71 @@ html, body {
 .addBtn {
     height: 20px;
 }
+
+.project-list{
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+.projectContainer{
+    display: flex;
+}
+
+.addProject{
+ width: 100px;
+}
+
+.active-todo {
+    font-weight: 700;
+}
+[data-todo-form] {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+[data-todo-form] > input, textarea {
+    outline:none;
+    border: none;
+}
+.description-input {
+ height: 40px;
+}
+
+.date-input {
+ width: 200px;
+}
+.add-button {
+    width: 25px
+}
+
+.delete-button {
+    width: 55px;
+}
+
+textarea[name="description"], input[type="text"] {
+ font-family: 'Times New Roman', Times, serif;
+ 
+}
+
+.inputbuttons {
+ display: flex;
+ gap: 15px;
+}
+
+ [data-date-input] {
+    width: 95px;
+ }
+ [data-date-input]::placeholder {
+    color: black;
+ }
+
+[data-priority-input], .date-input {
+    border-radius: 8px;
+    outline:none;
+    border: none;
+ }
+
+ .active-project {
+    font-weight: 700;
+ }
