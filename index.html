@@ -59,29 +59,36 @@
                 id="priority"
                 class="priority-input"
                 data-priority-input
+                
               >
-                <option style="display: none" selected>Select Priority</option>
-                <option value="!">Not Important</option>
-                <option value="!!">Important</option>
-                <option value="!!!">Urgent</option>
+                <option style="display: none" >Select Priority</option>
+                <option value="Not Important">Not Important</option>
+                <option value="Important">Important</option>
+                <option value="Urgent">Urgent</option>
               </select>
+
+              
             </div>
-            <button class="add-button">+</button>
+            <button class="">Add To Do</button>
             
           </form>
-          <button class="delete-todo" data-delete-todo>Delete ToDo</button>
-          <button class="delete-button" data-delete-button>Delete Project</button>
+          <div class="buttons">
+            <button class="delete-todo" data-delete-todo>Delete To Do</button>
+            <button class="delete-button" data-delete-button>Delete Project</button>
+          </div>
           <ul class="todo-list" data-tasks></ul>
         </div>
       </div>
     </div>
     <template id="task-template">
       <div class="todo">
-        <h4></h4>
+        <h3></h3>
         <input type="checkbox" />
         <label>
           <span class="custom-checkbox"></span>
         </label>
+        <p></p>
+        <h4></h4>
       </div>
     </template>
   </body>
